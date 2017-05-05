@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loggerrythm.Core", "Loggerrythm.Core\Loggerrythm.Core.csproj", "{84A5A668-197B-44C8-B53D-D22409041369}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loggerrythm.Console.DotNetCore", "Loggerrythm.Console.DotNetCore\Loggerrythm.Console.DotNetCore.csproj", "{707294C0-1C4E-4EB2-B8B4-C7237DB13C28}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84A5A668-197B-44C8-B53D-D22409041369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84A5A668-197B-44C8-B53D-D22409041369}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84A5A668-197B-44C8-B53D-D22409041369}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84A5A668-197B-44C8-B53D-D22409041369}.Release|Any CPU.Build.0 = Release|Any CPU
+		{707294C0-1C4E-4EB2-B8B4-C7237DB13C28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{707294C0-1C4E-4EB2-B8B4-C7237DB13C28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{707294C0-1C4E-4EB2-B8B4-C7237DB13C28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{707294C0-1C4E-4EB2-B8B4-C7237DB13C28}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
