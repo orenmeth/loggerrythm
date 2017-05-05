@@ -9,177 +9,548 @@ using System.Text;
 namespace Loggerrythm.Core
 {
     public abstract class LoggerType {
-        #region Verbose
-        public abstract void Verbose(string message);
-        public abstract void Verbose(Exception exception, string message);
-        public abstract void Verbose(string message, object[] values);
-        public abstract void Verbose(Exception exception, string message, object[] values);
-        public abstract void Verbose<T>(string message, T value);
-        public abstract void Verbose<T>(Exception exception, string message, T value);
-        public abstract void Verbose<T0, T1>(string message, T0 value0, T1 value1);
-        public abstract void Verbose<T0, T1>(Exception exception, string message, T0 value0, T1 value1);
-        public abstract void Verbose<T0, T1, T2>(string message, T0 value0, T1 value1, T2 value2);
-        public abstract void Verbose<T0, T1, T2>(Exception exception, string message, T0 value0, T1 value1, T2 value2);
-        #endregion
-
-        #region Debug
-        public abstract void Debug(string message);
-        public abstract void Debug(Exception exception, string message);
-        public abstract void Debug(string message, object[] values);
-        public abstract void Debug(Exception exception, string message, object[] values);
-        public abstract void Debug<T>(string message, T value);
-        public abstract void Debug<T>(Exception exception, string message, T value);
-        public abstract void Debug<T0, T1>(string message, T0 value0, T1 value1);
-        public abstract void Debug<T0, T1>(Exception exception, string message, T0 value0, T1 value1);
-        public abstract void Debug<T0, T1, T2>(string message, T0 value0, T1 value1, T2 value2);
-        public abstract void Debug<T0, T1, T2>(Exception exception, string message, T0 value0, T1 value1, T2 value2);
-        #endregion
-
-        #region Information
-        #endregion
-
-        #region Warning
-        #endregion
-
-        #region Error
-        #endregion
-
-        #region Fatal
-        #endregion
+        public abstract void Log(EventLogLevel level, string message);
+        public abstract void Log(EventLogLevel level, Exception exception, string message);
+        public abstract void Log(EventLogLevel level, string message, object[] values);
+        public abstract void Log(EventLogLevel level, Exception exception, string message, object[] values);
+        public abstract void Log<T>(EventLogLevel level, string message, T value);
+        public abstract void Log<T>(EventLogLevel level, Exception exception, string message, T value);
+        public abstract void Log<T0, T1>(EventLogLevel level, string message, T0 value0, T1 value1);
+        public abstract void Log<T0, T1>(EventLogLevel level, Exception exception, string message, T0 value0, T1 value1);
+        public abstract void Log<T0, T1, T2>(EventLogLevel level, string message, T0 value0, T1 value1, T2 value2);
+        public abstract void Log<T0, T1, T2>(EventLogLevel level, Exception exception, string message, T0 value0, T1 value1, T2 value2);
     }
 
     public class ElasticLogger : LoggerType
     {
-        Logger Log;
+        Logger Logger;
 
         public ElasticLogger()
         {
-            Log = new LoggerConfiguration()
+            Logger = new LoggerConfiguration()
                 .WriteTo
                 .Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
                 {
                     AutoRegisterTemplate = true,
                     IndexFormat = "elasticlogger-index-{0:yyyy.MM}",
-                    MinimumLogEventLevel = LogEventLevel.Debug
+                    MinimumLogEventLevel = LogEventLevel.Verbose
                 })
+                .WriteTo
+                .LiterateConsole()
                 .CreateLogger();
         }
 
-        #region Verbose
-        public override void Verbose(string message)
+        public override void Log(EventLogLevel level, string message)
         {
-            Log.Verbose(message);
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(message);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(message);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(message);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(message);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(message);
+                    break;
+                default:
+                    Logger.Verbose(message);
+                    break;
+            }            
         }
 
-        public override void Verbose(Exception exception, string message)
+        public override void Log(EventLogLevel level, Exception exception, string message)
         {
-            Log.Verbose(exception, message);
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(exception, message);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(exception, message);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(exception, message);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(exception, message);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(exception, message);
+                    break;
+                default:
+                    Logger.Verbose(exception, message);
+                    break;
+            }
         }
 
-        public override void Verbose(string message, object[] values)
+        public override void Log(EventLogLevel level, string message, object[] values)
         {
-            Log.Verbose(message, values);
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(message, values);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(message, values);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(message, values);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(message, values);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(message, values);
+                    break;
+                default:
+                    Logger.Verbose(message, values);
+                    break;
+            }
         }
 
-        public override void Verbose(Exception exception, string message, object[] values)
+        public override void Log(EventLogLevel level, Exception exception, string message, object[] values)
         {
-            Log.Verbose(exception, message, values);
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(exception, message, values);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(exception, message, values);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(exception, message, values);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(exception, message, values);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(exception, message, values);
+                    break;
+                default:
+                    Logger.Verbose(exception, message, values);
+                    break;
+            }
         }
 
-        public override void Verbose<T>(string message, T value)
+        public override void Log<T>(EventLogLevel level, string message, T value)
         {
-            Log.Verbose(message, value);
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(message, value);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(message, value);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(message, value);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(message, value);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(message, value);
+                    break;
+                default:
+                    Logger.Verbose(message, value);
+                    break;
+            }
         }
 
-        public override void Verbose<T>(Exception exception, string message, T value)
+        public override void Log<T>(EventLogLevel level, Exception exception, string message, T value)
         {
-            Log.Verbose(exception, message, value);
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(exception, message, value);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(exception, message, value);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(exception, message, value);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(exception, message, value);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(exception, message, value);
+                    break;
+                default:
+                    Logger.Verbose(exception, message, value);
+                    break;
+            }
         }
 
-        public override void Verbose<T0, T1>(string message, T0 value0, T1 value1)
+        public override void Log<T0, T1>(EventLogLevel level, string message, T0 value0, T1 value1)
         {
-            Log.Verbose(message, value0, value1);
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(message, value0, value1);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(message, value0, value1);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(message, value0, value1);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(message, value0, value1);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(message, value0, value1);
+                    break;
+                default:
+                    Logger.Verbose(message, value0, value1);
+                    break;
+            }
         }
 
-        public override void Verbose<T0, T1>(Exception exception, string message, T0 value0, T1 value1)
+        public override void Log<T0, T1>(EventLogLevel level, Exception exception, string message, T0 value0, T1 value1)
         {
-            Log.Verbose(exception, message, value0, value1);
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(exception, message, value0, value1);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(exception, message, value0, value1);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(exception, message, value0, value1);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(exception, message, value0, value1);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(exception, message, value0, value1);
+                    break;
+                default:
+                    Logger.Verbose(exception, message, value0, value1);
+                    break;
+            }
         }
 
-        public override void Verbose<T0, T1, T2>(string message, T0 value0, T1 value1, T2 value2)
+        public override void Log<T0, T1, T2>(EventLogLevel level, string message, T0 value0, T1 value1, T2 value2)
         {
-            Log.Verbose(message, value0, value1, value2);
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(message, value0, value1, value2);
+                    break;
+                default:
+                    Logger.Verbose(message, value0, value1, value2);
+                    break;
+            }
         }
 
-        public override void Verbose<T0, T1, T2>(Exception exception, string message, T0 value0, T1 value1, T2 value2)
+        public override void Log<T0, T1, T2>(EventLogLevel level, Exception exception, string message, T0 value0, T1 value1, T2 value2)
         {
-            Log.Verbose(exception, message, value0, value1, value2);
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(exception, message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(exception, message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(exception, message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(exception, message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(exception, message, value0, value1, value2);
+                    break;
+                default:
+                    Logger.Verbose(exception, message, value0, value1, value2);
+                    break;
+            }
         }
-        #endregion
+    }
 
-        #region Debug
-        public override void Debug(string message)
-        {
-            Log.Debug(message);
-        }
+    public class LiterateLogger : LoggerType
+    {
+        Logger Logger;
 
-        public override void Debug(Exception exception, string message)
+        public LiterateLogger()
         {
-            Log.Debug(exception, message);
-        }
-
-        public override void Debug(string message, object[] values)
-        {
-            Log.Debug(message, values);
-        }
-
-        public override void Debug(Exception exception, string message, object[] values)
-        {
-            Log.Debug(exception, message, values);
-        }
-
-        public override void Debug<T>(string message, T value)
-        {
-            Log.Debug(message, value);
-        }
-
-        public override void Debug<T>(Exception exception, string message, T value)
-        {
-            Log.Debug(exception, message, value);
-        }
-
-        public override void Debug<T0, T1>(string message, T0 value0, T1 value1)
-        {
-            Log.Debug(message, value0, value1);
+            Logger = new LoggerConfiguration()
+                .WriteTo.LiterateConsole()
+                .CreateLogger();
         }
 
-        public override void Debug<T0, T1>(Exception exception, string message, T0 value0, T1 value1)
+        public override void Log(EventLogLevel level, string message)
         {
-            Log.Debug(exception, message, value0, value1);
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(message);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(message);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(message);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(message);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(message);
+                    break;
+                default:
+                    Logger.Verbose(message);
+                    break;
+            }
         }
 
-        public override void Debug<T0, T1, T2>(string message, T0 value0, T1 value1, T2 value2)
+        public override void Log(EventLogLevel level, Exception exception, string message)
         {
-            Log.Debug(message, value0, value1, value2);
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(exception, message);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(exception, message);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(exception, message);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(exception, message);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(exception, message);
+                    break;
+                default:
+                    Logger.Verbose(exception, message);
+                    break;
+            }
         }
 
-        public override void Debug<T0, T1, T2>(Exception exception, string message, T0 value0, T1 value1, T2 value2)
+        public override void Log(EventLogLevel level, string message, object[] values)
         {
-            Log.Debug(exception, message, value0, value1, value2);
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(message, values);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(message, values);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(message, values);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(message, values);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(message, values);
+                    break;
+                default:
+                    Logger.Verbose(message, values);
+                    break;
+            }
         }
-        #endregion
 
-        #region Information
-        #endregion
+        public override void Log(EventLogLevel level, Exception exception, string message, object[] values)
+        {
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(exception, message, values);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(exception, message, values);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(exception, message, values);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(exception, message, values);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(exception, message, values);
+                    break;
+                default:
+                    Logger.Verbose(exception, message, values);
+                    break;
+            }
+        }
 
-        #region Warning
-        #endregion
+        public override void Log<T>(EventLogLevel level, string message, T value)
+        {
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(message, value);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(message, value);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(message, value);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(message, value);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(message, value);
+                    break;
+                default:
+                    Logger.Verbose(message, value);
+                    break;
+            }
+        }
 
-        #region Error
-        #endregion
+        public override void Log<T>(EventLogLevel level, Exception exception, string message, T value)
+        {
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(exception, message, value);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(exception, message, value);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(exception, message, value);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(exception, message, value);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(exception, message, value);
+                    break;
+                default:
+                    Logger.Verbose(exception, message, value);
+                    break;
+            }
+        }
 
-        #region Fatal
-        #endregion
+        public override void Log<T0, T1>(EventLogLevel level, string message, T0 value0, T1 value1)
+        {
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(message, value0, value1);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(message, value0, value1);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(message, value0, value1);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(message, value0, value1);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(message, value0, value1);
+                    break;
+                default:
+                    Logger.Verbose(message, value0, value1);
+                    break;
+            }
+        }
+
+        public override void Log<T0, T1>(EventLogLevel level, Exception exception, string message, T0 value0, T1 value1)
+        {
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(exception, message, value0, value1);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(exception, message, value0, value1);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(exception, message, value0, value1);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(exception, message, value0, value1);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(exception, message, value0, value1);
+                    break;
+                default:
+                    Logger.Verbose(exception, message, value0, value1);
+                    break;
+            }
+        }
+
+        public override void Log<T0, T1, T2>(EventLogLevel level, string message, T0 value0, T1 value1, T2 value2)
+        {
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(message, value0, value1, value2);
+                    break;
+                default:
+                    Logger.Verbose(message, value0, value1, value2);
+                    break;
+            }
+        }
+
+        public override void Log<T0, T1, T2>(EventLogLevel level, Exception exception, string message, T0 value0, T1 value1, T2 value2)
+        {
+            switch (level)
+            {
+                case EventLogLevel.Debug:
+                    Logger.Debug(exception, message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Information:
+                    Logger.Information(exception, message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Warning:
+                    Logger.Warning(exception, message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Error:
+                    Logger.Error(exception, message, value0, value1, value2);
+                    break;
+                case EventLogLevel.Fatal:
+                    Logger.Fatal(exception, message, value0, value1, value2);
+                    break;
+                default:
+                    Logger.Verbose(exception, message, value0, value1, value2);
+                    break;
+            }
+        }
     }
 
     public static class LoggerFactory
@@ -190,6 +561,8 @@ namespace Loggerrythm.Core
             {
                 case LoggerTypes.ElasticLogger:
                     return new ElasticLogger();
+                case LoggerTypes.LiterateLogger:
+                    return new LiterateLogger();
                 default:
                     return new ElasticLogger();
             }
@@ -198,6 +571,17 @@ namespace Loggerrythm.Core
 
     public enum LoggerTypes
     {
-        ElasticLogger = 0
+        ElasticLogger = 0,
+        LiterateLogger = 1
+    }
+
+    public enum EventLogLevel
+    {
+        Verbose = 0,
+        Debug = 1,
+        Information = 2,
+        Warning = 3,
+        Error = 4,
+        Fatal = 5
     }
 }
