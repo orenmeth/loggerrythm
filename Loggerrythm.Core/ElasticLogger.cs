@@ -1,8 +1,10 @@
-﻿using Serilog;
+﻿using Elasticsearch.Net;
+using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using Serilog.Sinks.Elasticsearch;
 using System;
+using System.Collections.Generic;
 
 namespace Loggerrythm.Core
 {
@@ -10,16 +12,18 @@ namespace Loggerrythm.Core
     {
         Logger Logger;
 
-        public ElasticLogger()
+        public ElasticLogger(IEnumerable<Uri> urls, string indexFormat, EventLogLevel minimumLogLevel)
         {
+            LogEventLevel level = (LogEventLevel)minimumLogLevel;
+            var elasticsearchSinkOptions = new ElasticsearchSinkOptions(new Uri("http://localhost:9200")) {
+                AutoRegisterTemplate = true,
+                IndexFormat = indexFormat
+            };
+
             Logger = new LoggerConfiguration()
+                .MinimumLevel.Is(level)
                 .WriteTo
-                .Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
-                {
-                    AutoRegisterTemplate = true,
-                    IndexFormat = "elasticlogger-index-{0:yyyy.MM}",
-                    MinimumLogEventLevel = LogEventLevel.Verbose
-                })
+                .Elasticsearch(elasticsearchSinkOptions)
                 .WriteTo
                 .LiterateConsole()
                 .CreateLogger();
