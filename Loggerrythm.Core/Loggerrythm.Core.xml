@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Loggerrythm.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Loggerrythm.Core.LoggerFactory">
+            <summary>
+            https://www.thoughtworks.com/radar/techniques/structured-logging
+            </summary>
+        </member>
+        <member name="M:Loggerrythm.Core.LoggerFactory.Get(Loggerrythm.Core.LoggerTypes)">
+            <summary>
+            Creates an instance of the 'Literate' console logger.
+            </summary>
+            <param name="loggerType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Loggerrythm.Core.LoggerFactory.Get(System.Collections.Generic.IEnumerable{System.Uri},System.String,Loggerrythm.Core.EventLogLevel)">
+            <summary>
+            Creates an instance of the 'ElasticSearch' logger.
+            </summary>
+            <param name="elasticsearchNodeUris"></param>
+            <param name="indexPattern"></param>
+            <param name="minimumLogLevel"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -11,10 +11,10 @@ namespace Loggerrythm.Console.DotNetCore
             var nodeUris = new List<Uri> { new Uri("http://localhost:9200") };
             var elasticLogger = LoggerFactory.Get(nodeUris, "loggerrythm-index-{0:yyyy.MM}", EventLogLevel.Verbose);
 
-            for (var i = 0; i < 10; i++)
+            for (var errorNumber = 0; errorNumber < 24; errorNumber++)
             {
-                elasticLogger.Log(EventLogLevel.Verbose, $"Loggerrythm.ElasticLogger: {i}", i);
-                System.Threading.Thread.Sleep(500);
+                elasticLogger.Log(EventLogLevel.Warning, $"Loggerrythm.ElasticLogger: {errorNumber}", errorNumber);
+                System.Threading.Thread.Sleep(50);
             }
             
 

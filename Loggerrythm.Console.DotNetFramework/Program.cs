@@ -1,4 +1,6 @@
-﻿using Loggerrythm.Core;
+﻿using System;
+using System.Collections.Generic;
+using Loggerrythm.Core;
 
 namespace Loggerrythm.Console.DotNetFramework
 {
@@ -6,12 +8,15 @@ namespace Loggerrythm.Console.DotNetFramework
     {
         static void Main(string[] args)
         {
-            var elasticLogger = LoggerFactory.Get(LoggerTypes.ElasticLogger);
+            var nodeUris = new List<Uri> { new Uri("http://localhost:9200") };
+            var elasticLogger = LoggerFactory.Get(nodeUris, "loggerrythm-index-{0:yyyy.MM}", EventLogLevel.Verbose);
 
-            for (var i = 0; i < 100; i++)
+            for (var errorNumber = 0; errorNumber < 24; errorNumber++)
             {
-                elasticLogger.Log(EventLogLevel.Error, $"ElasticLogger: {i}", i);
+                elasticLogger.Log(EventLogLevel.Warning, $"Loggerrythm.ElasticLogger: {errorNumber}", errorNumber);
+                System.Threading.Thread.Sleep(50);
             }
+
 
             System.Console.WriteLine("Press any key to exit...");
             System.Console.ReadKey();

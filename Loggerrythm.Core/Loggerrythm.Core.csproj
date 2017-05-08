@@ -2,6 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
+	<PackageId>Loggerrythm.Core</PackageId>
+	<PackageVersion>0.0.1</PackageVersion>
+	<Authors>Oren Meth</Authors>
+	<Description>DotNet Standard Wrapper for Serilog using the Elasticsearch sink to log events to an Elasticsearch database.</Description>
+	<PackageRequireLicenceAcceptance>false</PackageRequireLicenceAcceptance>
+	<PackageReleaseNotes>Initial Release</PackageReleaseNotes>
+	<Copyright>Copyright 2017 (c) Oren Meth. All rights reserved.</Copyright>
+	<PackageTags>logger logging logs serilog elasticsearch dotnet standard</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>Loggerrythm.Core.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
